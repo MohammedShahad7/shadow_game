@@ -1,0 +1,500 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle, #111, #000);
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.game {
+  min-height: 100vh;
+  color: white;
+  text-align: center;
+  padding: 16px;
+}
+
+/* ---------- TITLE ---------- */
+.title {
+  font-size: clamp(26px, 5vw, 42px);
+  margin-bottom: 15px;
+  text-shadow: 0 0 15px cyan;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px cyan;
+  }
+  to {
+    text-shadow: 0 0 30px violet;
+  }
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  font-size: clamp(12px, 2vw, 18px);
+}
+
+.hud span {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 10px 14px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+/* ---------- BOARD ---------- */
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(28px, 1fr));
+  gap: 3px;
+  width: min(95vw, 560px);
+  margin: auto;
+}
+
+.tile {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(14px, 3vw, 28px);
+  transition: 0.3s;
+}
+
+/* ---------- TILE COLORS ---------- */
+.floor {
+  background: #1f2937;
+}
+
+.wall {
+  background: linear-gradient(135deg, #000, #333);
+}
+
+.dark {
+  background: #050505;
+}
+
+.blocked {
+  background: #6d28d9;
+  box-shadow: inset 0 0 10px #a855f7;
+}
+
+.player {
+  background: #2563eb;
+  box-shadow: 0 0 18px #60a5fa;
+  animation: bounce 0.5s infinite alternate;
+}
+
+.enemy {
+  background: #dc2626;
+  box-shadow: 0 0 18px red;
+  animation: shake 0.3s infinite;
+}
+
+.key {
+  background: gold;
+  box-shadow: 0 0 18px gold;
+  animation: spin 1s linear infinite;
+}
+
+.exit {
+  background: #16a34a;
+  box-shadow: 0 0 15px lime;
+  animation: pulse 1.2s infinite alternate;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
+}
+
+@keyframes shake {
+  0% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  100% { transform: translateX(-2px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+/* ---------- CONTROLS ---------- */
+.controls {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.controls button {
+  width: clamp(45px, 12vw, 65px);
+  height: clamp(45px, 12vw, 65px);
+  font-size: clamp(18px, 5vw, 26px);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  background: #1e40af;
+  color: white;
+  transition: 0.3s;
+}
+
+.controls button:hover {
+  background: #3b82f6;
+  transform: scale(1.08);
+}
+
+/* ---------- POPUP ---------- */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  z-index: 999;
+  animation: fadeIn 0.4s ease;
+}
+
+.popup-box {
+  background: linear-gradient(145deg, #111827, #1f2937);
+  padding: 28px 20px;
+  border-radius: 22px;
+  width: min(92%, 420px);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+.popup-box h2 {
+  font-size: clamp(24px, 6vw, 34px);
+  margin-bottom: 20px;
+  white-space: pre-line;
+}
+
+.popup-box button {
+  border: none;
+  padding: 14px 28px;
+  font-size: clamp(16px, 4vw, 20px);
+  border-radius: 14px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  transition: 0.3s;
+}
+
+.popup-box button:hover {
+  transform: scale(1.08);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---------- SMALL PHONES ---------- */
+@media (max-width: 480px) {
+  .game {
+    padding: 10px;
+  }
+
+  .hud {
+    gap: 8px;
+  }
+
+  .hud span {
+    padding: 8px 10px;
+  }
+
+  .board {
+    gap: 2px;
+    width: 98vw;
+  }
+
+  .tile {
+    border-radius: 7px;
+  }
+
+  .controls {
+    gap: 8px;
+  }
+}body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle, #111, #000);
+  overflow-x: hidden;
+
+  /* ✅ REMOVE TEXT CURSOR + SELECTION */
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+}
+
+* {
+  box-sizing: border-box;
+
+  /* ✅ prevent text selection everywhere */
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.game {
+  min-height: 100vh;
+  color: white;
+  text-align: center;
+  padding: 16px;
+}
+
+/* ---------- TITLE ---------- */
+.title {
+  font-size: clamp(26px, 5vw, 42px);
+  margin-bottom: 15px;
+  text-shadow: 0 0 15px cyan;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px cyan;
+  }
+  to {
+    text-shadow: 0 0 30px violet;
+  }
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  font-size: clamp(12px, 2vw, 18px);
+}
+
+.hud span {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 10px 14px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+/* ---------- BOARD ---------- */
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(28px, 1fr));
+  gap: 3px;
+  width: min(95vw, 560px);
+  margin: auto;
+}
+
+.tile {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(14px, 3vw, 28px);
+  transition: 0.3s;
+
+  /* ✅ remove cursor on tiles */
+  cursor: default;
+}
+
+/* ---------- TILE COLORS ---------- */
+.floor {
+  background: #1f2937;
+}
+
+.wall {
+  background: linear-gradient(145deg, #6b7280, #1f2937);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 2px 2px 5px rgba(255, 255, 255, 0.1),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.6);
+}
+
+.dark {
+  background: #050505;
+}
+
+.blocked {
+  background: #6d28d9;
+  box-shadow: inset 0 0 10px #a855f7;
+}
+
+.player {
+  background: #2563eb;
+  box-shadow: 0 0 18px #60a5fa;
+  animation: bounce 0.5s infinite alternate;
+}
+
+.enemy {
+  background: #dc2626;
+  box-shadow: 0 0 18px red;
+  animation: shake 0.3s infinite;
+}
+
+.key {
+  background: gold;
+  box-shadow: 0 0 18px gold;
+  animation: spin 1s linear infinite;
+}
+
+.exit {
+  background: #16a34a;
+  box-shadow: 0 0 15px lime;
+  animation: pulse 1.2s infinite alternate;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
+}
+
+@keyframes shake {
+  0% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  100% { transform: translateX(-2px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+/* ---------- CONTROLS ---------- */
+.controls {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.controls button {
+  width: clamp(45px, 12vw, 65px);
+  height: clamp(45px, 12vw, 65px);
+  font-size: clamp(18px, 5vw, 26px);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  background: #1e40af;
+  color: white;
+  transition: 0.3s;
+
+  /* extra safety */
+  user-select: none;
+}
+
+.controls button:hover {
+  background: #3b82f6;
+  transform: scale(1.08);
+}
+
+/* ---------- POPUP ---------- */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  z-index: 999;
+  animation: fadeIn 0.4s ease;
+}
+
+.popup-box {
+  background: linear-gradient(145deg, #111827, #1f2937);
+  padding: 28px 20px;
+  border-radius: 22px;
+  width: min(92%, 420px);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+.popup-box h2 {
+  font-size: clamp(24px, 6vw, 34px);
+  margin-bottom: 20px;
+  white-space: pre-line;
+}
+
+.popup-box button {
+  border: none;
+  padding: 14px 28px;
+  font-size: clamp(16px, 4vw, 20px);
+  border-radius: 14px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  transition: 0.3s;
+
+  user-select: none;
+}
+
+.popup-box button:hover {
+  transform: scale(1.08);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---------- SMALL PHONES ---------- */
+@media (max-width: 480px) {
+  .game {
+    padding: 10px;
+  }
+
+  .hud {
+    gap: 8px;
+  }
+
+  .hud span {
+    padding: 8px 10px;
+  }
+
+  .board {
+    gap: 2px;
+    width: 98vw;
+  }
+
+  .tile {
+    border-radius: 7px;
+  }
+
+  .controls {
+    gap: 8px;
+  }
+}
+
+.player-key {
+  background: gold !important;
+  box-shadow: 0 0 20px gold;
+  animation: bounce 0.5s infinite alternate;
+}
