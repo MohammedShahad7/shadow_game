@@ -282,12 +282,12 @@ export default function App() {
 
             <p style={{ lineHeight: "1.9", fontSize: "18px", textAlign: "left" }}>
               🔑 First take the key.<br />
-              🚪 Then go to the door.<br />
+              🚪 Then go to the door and level up.<br />
               👻 Ghost = Game Over.<br />
               ⏰ Start: 1 minute.<br />
               ➕ +15 sec per level.<br />
               👻 +1 ghost every 5 levels.<br />
-              📈 Difficulty increases.
+              📈 Difficulty increases every level.
             </p>
 
             <button onClick={() => setShowIntro(false)}>
