@@ -17,7 +17,7 @@ function hasPath(start, end, walls) {
       [1, 0],
       [-1, 0],
       [0, 1],
-      [0, -1]
+      [0, -1],
     ];
 
     for (let [dx, dy] of dirs) {
@@ -95,12 +95,11 @@ export default function App() {
   const [time, setTime] = useState(60);
   const [score, setScore] = useState(0);
   const [enemies, setEnemies] = useState([]);
-
   const [showIntro, setShowIntro] = useState(true);
 
   const [popup, setPopup] = useState({
     show: false,
-    text: ""
+    text: "",
   });
 
   const data = useMemo(() => makeLevel(level), [level]);
@@ -113,7 +112,6 @@ export default function App() {
     setHasKey(false);
     setEnemies([]);
     setPopup({ show: false, text: "" });
-
     setShowIntro(false);
   }
 
@@ -128,7 +126,7 @@ export default function App() {
     for (let i = 0; i < ghostCount; i++) {
       arr.push({
         x: SIZE - 2 - i,
-        y: SIZE - 2
+        y: SIZE - 2,
       });
     }
 
@@ -231,24 +229,16 @@ export default function App() {
       let txt = "";
 
       if (data.walls.has(`${x},${y}`)) cls = "tile wall";
-
       else if (x === player.x && y === player.y) {
-        // 🔥 KEY FEATURE: PLAYER CHANGES COLOR AFTER PICKING KEY
         cls = hasKey ? "tile player player-key" : "tile player";
         txt = "🧍";
-      }
-
-      else if (enemies.some((g) => g.x === x && g.y === y)) {
+      } else if (enemies.some((g) => g.x === x && g.y === y)) {
         cls = "tile enemy";
         txt = "👻";
-      }
-
-      else if (!hasKey && x === data.key.x && y === data.key.y) {
+      } else if (!hasKey && x === data.key.x && y === data.key.y) {
         cls = "tile key";
         txt = "🔑";
-      }
-
-      else if (x === data.exit.x && y === data.exit.y) {
+      } else if (x === data.exit.x && y === data.exit.y) {
         cls = "tile exit";
         txt = "🚪";
       }
@@ -298,14 +288,50 @@ export default function App() {
       )}
 
       {!popup.show && !showIntro && (
-        <div className="board">{cells}</div>
+        <>
+          <div className="board">{cells}</div>
+
+          <div className="controls">
+  <button
+    className="ctrl"
+    onClick={() => move(0, -1)}
+  >
+    ⬆
+  </button>
+
+  <div className="middle-row">
+    <button
+      className="ctrl"
+      onClick={() => move(-1, 0)}
+    >
+      ⬅
+    </button>
+
+    <button
+      className="ctrl"
+      onClick={() => move(1, 0)}
+    >
+      ➡
+    </button>
+  </div>
+
+  <button
+    className="ctrl"
+    onClick={() => move(0, 1)}
+  >
+    ⬇
+  </button>
+</div>
+        </>
       )}
 
       {popup.show && (
         <div className="popup">
           <div className="popup-box">
             <h2>{popup.text}</h2>
-            <button onClick={restartGame}>Restart Game</button>
+            <button onClick={restartGame}>
+              Restart Game
+            </button>
           </div>
         </div>
       )}
